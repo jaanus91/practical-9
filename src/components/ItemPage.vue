@@ -12,6 +12,7 @@
             <AddToCart :index="0" :toggle-item="toggleItem"/>
             <div class="comment-contents">
                 <div class="comment">
+                    <div class="commented-at">2019-01-01 15:23</div>
                     Nice books!
                 </div>
             </div>
@@ -175,6 +176,10 @@
         background-color: #9ED0DB;
         border-radius: 20px;
         margin: 10px 0;
+    }
+    .comment-contents .comment .commented-at{
+        font-size: 10px;
+        color: #ffffff;
     }
 
     .comment-box {
