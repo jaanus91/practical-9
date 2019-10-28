@@ -4,7 +4,8 @@
             <div class="gallery">
                 <img id="item-main-image" :src="items[0].image">
                 <div class="thumbnails">
-                    <img v-for="(image, index) in items[0].thumbnails" :src="image" :key="index" alt="">
+                    <img v-for="(image, index) in items[0].thumbnails" :src="image" :key="index"
+                         @click="changeThumbnail(index)">
                 </div>
             </div>
             <h1>{{items[0].title}} - {{items[0].price}}$</h1>
@@ -45,6 +46,11 @@
         components: {
             AddToCart
         },
+        methods: {
+            changeThumbnail: function(index) {
+              this.items[0].image = this.items[0].thumbnails[index]
+            }
+        },
         props: {
             items: Array,
             toggleItem: Function
@@ -68,31 +74,8 @@
     section div.suggested-container {
         flex-grow: 2;
     }
-
-    .add-to-cart {
-        padding: 10px;
-        color: #ffffff;
-        background-color: #455a64;
-        border: 1px solid #35444d;
-        border-radius: 3px;
-    }
-
-    .add-to-cart:hover {
-        cursor: pointer;
-        border: 1px solid #455a64;
-    }
-
-    .remove-from-cart {
-        padding: 10px;
-        color: #ffffff;
-        background-color: #642027;
-        border: 1px solid #341114;
-        border-radius: 3px;
-    }
-
-    .remove-from-cart:hover {
-        cursor: pointer;
-        border: 1px solid #642027;
+    #item-main-image {
+      height: 400px;
     }
 
     #item-container h1 {
