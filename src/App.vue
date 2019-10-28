@@ -1,7 +1,7 @@
 <template>
     <div id="app">
         <Header :cart="cart"/>
-        <ItemPage :items="items"/>
+        <ItemPage :items="items" :toggle-item="toggleItem"/>
     </div>
 </template>
 
@@ -18,23 +18,36 @@
             let mainItem = new Item(
                 "Programming books bundle",
                 50.0,
-                "image1.jpg",
+                "./images/image1.jpg",
                 [
-                    "image1.jpg",
-                    "image2.jpg",
-                    "image3.jpg",
-                    "image4.jpg"
+                    "./images/image1.jpg",
+                    "./images/image2.jpg",
+                    "./images/image3.jpg",
+                    "./images/image4.jpg"
                 ]
             );
             return {
                 cart: new Cart(),
                 items: [
                     mainItem,
-                    new Item("Java Programming", 23.0, "image5.jpg"),
-                    new Item("Programming in C++", 15.0, "image6.jpg"),
-                    new Item("Programming and fundamentals of Python", 5.50, "image7.jpg"),
-                    new Item("My first coding book", 10.90, "image8.jpg")
+                    new Item("Java Programming", 23.0, "./images/image5.jpg"),
+                    new Item("Programming in C++", 15.0, "./images/image6.jpg"),
+                    new Item("Programming and fundamentals of Python", 5.50, "./images/image7.jpg"),
+                    new Item("My first coding book", 10.90, "./images/image8.jpg")
                 ]
+            }
+        },
+        methods: {
+            toggleItem: function(id) {
+                let index = this.cart.selected.indexOf(id);
+
+                if (index > -1) {
+                    this.cart.selected.splice(index, 1);
+                    return false;
+                }
+
+                this.cart.selected.push(id);
+                return true;
             }
         },
         components: {

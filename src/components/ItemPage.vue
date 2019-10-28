@@ -1,58 +1,216 @@
 <template>
-  <div class="hello">
-    <h1>{{ msg }}</h1>
-    <p>
-      For a guide and recipes on how to configure / customize this project,<br>
-      check out the
-      <a href="https://cli.vuejs.org" target="_blank" rel="noopener">vue-cli documentation</a>.
-    </p>
-    <h3>Installed CLI Plugins</h3>
-    <ul>
-      <li><a href="https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-babel" target="_blank" rel="noopener">babel</a></li>
-      <li><a href="https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-eslint" target="_blank" rel="noopener">eslint</a></li>
-    </ul>
-    <h3>Essential Links</h3>
-    <ul>
-      <li><a href="https://vuejs.org" target="_blank" rel="noopener">Core Docs</a></li>
-      <li><a href="https://forum.vuejs.org" target="_blank" rel="noopener">Forum</a></li>
-      <li><a href="https://chat.vuejs.org" target="_blank" rel="noopener">Community Chat</a></li>
-      <li><a href="https://twitter.com/vuejs" target="_blank" rel="noopener">Twitter</a></li>
-      <li><a href="https://news.vuejs.org" target="_blank" rel="noopener">News</a></li>
-    </ul>
-    <h3>Ecosystem</h3>
-    <ul>
-      <li><a href="https://router.vuejs.org" target="_blank" rel="noopener">vue-router</a></li>
-      <li><a href="https://vuex.vuejs.org" target="_blank" rel="noopener">vuex</a></li>
-      <li><a href="https://github.com/vuejs/vue-devtools#vue-devtools" target="_blank" rel="noopener">vue-devtools</a></li>
-      <li><a href="https://vue-loader.vuejs.org" target="_blank" rel="noopener">vue-loader</a></li>
-      <li><a href="https://github.com/vuejs/awesome-vue" target="_blank" rel="noopener">awesome-vue</a></li>
-    </ul>
-  </div>
+    <section>
+        <div id="item-container">
+            <div class="gallery">
+                <img id="item-main-image" :src="items[0].image">
+                <div class="thumbnails">
+                    <img v-for="(image, index) in items[0].thumbnails" :src="image" :key="index" alt="">
+                </div>
+            </div>
+            <h1>{{items[0].title}} - {{items[0].price}}$</h1>
+            <AddToCart :index="0" :toggle-item="toggleItem"/>
+            <div class="comment-contents">
+                <div class="comment">
+                    Nice books!
+                </div>
+            </div>
+            <div class="comment-box">
+                <textarea rows="10" placeholder="Leave a Comment..."></textarea>
+            </div>
+        </div>
+
+        <div class="suggested-container">
+            <h3>Total: <span id="total-price">0.00</span>$</h3>
+            <h3>Similar items</h3>
+            <ul>
+                <li v-for="(item, index) in items" :key="index">
+                    <div v-if="index !== 0">
+                        <img :src="item.image">
+                        <h4>
+                            <a href="#">{{item.title}} - {{item.price}}$</a>
+                        </h4>
+                        <AddToCart :index="index" :toggle-item="toggleItem"/>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </section>
 </template>
 
 <script>
-export default {
-  name: 'HelloWorld',
-  props: {
-    msg: String
-  }
-}
+    import AddToCart from './AddToCart'
+
+    export default {
+        name: 'ItemPage',
+        components: {
+            AddToCart
+        },
+        props: {
+            items: Array,
+            toggleItem: Function
+        }
+    }
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-h3 {
-  margin: 40px 0 0;
-}
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-a {
-  color: #42b983;
-}
+
+    section {
+        display: flex;
+        width: 80%;
+        margin: 30px auto;
+    }
+
+    section div#item-container {
+        flex-grow: 10;
+    }
+
+    section div.suggested-container {
+        flex-grow: 2;
+    }
+
+    .add-to-cart {
+        padding: 10px;
+        color: #ffffff;
+        background-color: #455a64;
+        border: 1px solid #35444d;
+        border-radius: 3px;
+    }
+
+    .add-to-cart:hover {
+        cursor: pointer;
+        border: 1px solid #455a64;
+    }
+
+    .remove-from-cart {
+        padding: 10px;
+        color: #ffffff;
+        background-color: #642027;
+        border: 1px solid #341114;
+        border-radius: 3px;
+    }
+
+    .remove-from-cart:hover {
+        cursor: pointer;
+        border: 1px solid #642027;
+    }
+
+    #item-container h1 {
+        margin: 15px 15px;
+    }
+
+    #item-container .gallery {
+        text-align: center;
+    }
+
+    #item-container .thumbnails img {
+        width: 100px;
+        height: 100px;
+        object-fit: cover;
+        object-position: top center;
+        float: left;
+        margin-right: 20px;
+        cursor: pointer
+    }
+
+    #item-container .thumbnails img:hover {
+        cursor: pointer;
+        opacity: .7;
+    }
+
+    #item-container .thumbnails::after {
+        display: block;
+        content: "";
+        clear: both;
+    }
+
+    .suggested-container h3 {
+        margin: 15px;
+        padding: 15px;
+        color: #ffffff;
+        background-color: #455a64;
+    }
+
+    .suggested-container ul {
+        margin: 15px;
+        padding: 0;
+    }
+
+    .suggested-container ul li {
+        list-style: none;
+    }
+
+    .suggested-container ul li div {
+        margin: 20px 0;
+    }
+
+    .suggested-container ul li img {
+        width: 20%;
+        height: 150px;
+        object-fit: cover;
+        object-position: top center;
+        float: left;
+        margin-right: 20px;
+    }
+
+    .suggested-container ul li div::after {
+        content: "";
+        display: block;
+        clear: both;
+    }
+
+    .suggested-container ul li h4 {
+        margin-top: 0;
+        margin-bottom: 10px;
+    }
+
+    .suggested-container ul li h4 a {
+        color: #1a1a1a;
+        text-decoration: none;
+    }
+
+    .suggested-container ul li h4 a:hover {
+        color: #ff5f52;
+        text-decoration: underline;
+    }
+
+    .suggested-container ul li small {
+        color: #bcbcbc;
+    }
+
+    footer {
+        color: #cccccc;
+        text-align: center;
+    }
+
+    .comment-contents {
+        margin: 30px 0;
+    }
+
+    .comment-contents .comment {
+        padding: 15px;
+        background-color: #9ED0DB;
+        border-radius: 20px;
+        margin: 10px 0;
+    }
+
+    .comment-box {
+        margin-top: 30px;
+    }
+
+    .comment-box textarea {
+        width: 100%;
+        box-sizing: border-box;
+        height: 50px;
+        padding: 10px;
+        font-size: 12px;
+        border: 1px dashed #000000;
+        resize: none;
+    }
+
+    @media screen and (max-width: 768px) {
+        section {
+            flex-direction: column;
+        }
+    }
 </style>
