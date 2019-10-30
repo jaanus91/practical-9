@@ -10,19 +10,11 @@
             </div>
             <h1>{{items[0].title}} - {{items[0].price}}$</h1>
             <AddToCart :index="0" :toggle-item="toggleItem"/>
-            <div class="comment-contents">
-                <div class="comment">
-                    <div class="commented-at">2019-01-01 15:23</div>
-                    Nice books!
-                </div>
-            </div>
-            <div class="comment-box">
-                <textarea rows="10" placeholder="Leave a Comment..."></textarea>
-            </div>
+            <Comments/>
         </div>
 
         <div class="suggested-container">
-            <h3>Total: <span id="total-price">0.00</span>$</h3>
+            <h3>Total: <span id="total-price">{{abc.total}}</span>$</h3>
             <h3>Similar items</h3>
             <ul>
                 <li v-for="(item, index) in items" :key="index">
@@ -41,11 +33,13 @@
 
 <script>
     import AddToCart from './AddToCart'
+    import Comments from './Comments'
 
     export default {
         name: 'ItemPage',
         components: {
-            AddToCart
+            AddToCart,
+            Comments
         },
         methods: {
             changeThumbnail: function(index) {
@@ -54,6 +48,7 @@
         },
         props: {
             items: Array,
+            abc: Object,
             toggleItem: Function
         }
     }
@@ -165,35 +160,6 @@
     footer {
         color: #cccccc;
         text-align: center;
-    }
-
-    .comment-contents {
-        margin: 30px 0;
-    }
-
-    .comment-contents .comment {
-        padding: 15px;
-        background-color: #9ED0DB;
-        border-radius: 20px;
-        margin: 10px 0;
-    }
-    .comment-contents .comment .commented-at{
-        font-size: 10px;
-        color: #ffffff;
-    }
-
-    .comment-box {
-        margin-top: 30px;
-    }
-
-    .comment-box textarea {
-        width: 100%;
-        box-sizing: border-box;
-        height: 50px;
-        padding: 10px;
-        font-size: 12px;
-        border: 1px dashed #000000;
-        resize: none;
     }
 
     @media screen and (max-width: 768px) {

@@ -1,7 +1,7 @@
 <template>
     <div id="app">
         <Header :cart="cart"/>
-        <ItemPage :items="items" :toggle-item="toggleItem"/>
+        <ItemPage :items="items" :abc="cart" :toggle-item="toggleItem"/>
     </div>
 </template>
 
@@ -26,6 +26,8 @@
                     "./images/image4.jpg"
                 ]
             );
+            // eslint-disable-next-line
+            console.log("some log")
             return {
                 cart: new Cart(),
                 items: [
@@ -39,14 +41,16 @@
         },
         methods: {
             toggleItem: function(id) {
+                let seletedItem = this.items[id]
                 let index = this.cart.selected.indexOf(id);
 
                 if (index > -1) {
                     this.cart.selected.splice(index, 1);
+                    this.cart.total -= seletedItem.price
                     return false;
                 }
-
                 this.cart.selected.push(id);
+                this.cart.total += seletedItem.price
                 return true;
             }
         },

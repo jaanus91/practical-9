@@ -1,7 +1,7 @@
 <template>
     <button :class="{'add-to-cart' : !selected, 'remove-from-cart' : selected}" @click="selected = toggleItem(index)">
         <span v-if="!selected">Add to cart</span>
-        <span v-if="selected">Remove from cart</span>
+        <span v-else>Remove from cart</span>
     </button>
 </template>
 
